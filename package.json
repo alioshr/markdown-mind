@@ -1,0 +1,217 @@
+{
+  "name": "markdown-mind",
+  "displayName": "MarkdownMind - Smart Note Taking with Markdown",
+  "description": "Organize your thoughts seamlessly with local and global Markdown notes. Keep your ideas, code snippets, and documentation right where you need them.",
+  "version": "1.0.0",
+  "publisher": "AlioshRomano",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alioshr/markdown-mind.git"
+  },
+  "engines": {
+    "vscode": "^1.75.0"
+  },
+  "icon": "resources/icon.png",
+  "categories": [
+    "Other"
+  ],
+  "keywords": [
+    "notes",
+    "developer",
+    "productivity",
+    "notepad",
+    "quick notes",
+    "vscode",
+    "coding notes"
+  ],
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "notepads",
+          "title": "MarkdownMind",
+          "icon": "resources/notepads-icon.png"
+        }
+      ]
+    },
+    "views": {
+      "notepads": [
+        {
+          "id": "localNotepads",
+          "name": "Notes",
+          "type": "tree",
+          "visibility": "collapsed"
+        },
+        {
+          "id": "globalNotepads",
+          "name": "Global Notes",
+          "type": "tree",
+          "visibility": "collapsed"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "notepads.createRootFolder",
+        "title": "MarkdownMind: Create Root Folder",
+        "icon": "$(new-folder)"
+      },
+      {
+        "command": "notepads.deleteFolder",
+        "title": "MarkdownMind: Delete Folder",
+        "icon": "$(trash)"
+      },
+      {
+        "command": "notepads.addLocalNote",
+        "title": "MarkdownMind: New Note",
+        "icon": "$(add)"
+      },
+      {
+        "command": "notepads.addFileToFolder",
+        "title": "MarkdownMind: Create New Note",
+        "icon": "$(new-file)"
+      },
+      {
+        "command": "notepads.addSubfolder",
+        "title": "MarkdownMind: Create Subfolder",
+        "icon": "$(new-folder)"
+      },
+      {
+        "command": "notepads.deleteNote",
+        "title": "MarkdownMind: Delete Note",
+        "icon": "$(trash)"
+      },
+      {
+        "command": "notepads.renameNote",
+        "title": "MarkdownMind: Rename Note",
+        "icon": "$(edit)"
+      },
+      {
+        "command": "notepads.addGlobalDirectory",
+        "title": "MarkdownMind: Add Global Directory",
+        "icon": "$(add)"
+      },
+      {
+        "command": "notepads.removeGlobalDirectory",
+        "title": "MarkdownMind: Remove Directory",
+        "icon": "$(trash)"
+      },
+      {
+        "command": "notepads.renameGlobalDirectory",
+        "title": "MarkdownMind: Rename Directory",
+        "icon": "$(edit)"
+      },
+      {
+        "command": "notepads.editGlobalDirectoryPath",
+        "title": "MarkdownMind: Change Directory Location",
+        "icon": "$(folder)"
+      }
+    ],
+    "menus": {
+      "view/title": [
+        {
+          "command": "notepads.addLocalNote",
+          "when": "view == localNotepads",
+          "group": "navigation@1"
+        },
+        {
+          "command": "notepads.addGlobalDirectory",
+          "when": "view == globalNotepads",
+          "group": "navigation@1"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "notepads.deleteNote",
+          "when": "viewItem == note",
+          "group": "inline@1"
+        },
+        {
+          "command": "notepads.renameNote",
+          "when": "viewItem == note",
+          "group": "inline@2"
+        },
+        {
+          "command": "notepads.createRootFolder",
+          "when": "viewItem == globalDirectory",
+          "group": "2_create@1"
+        },
+        {
+          "command": "notepads.addFileToFolder",
+          "when": "viewItem =~ /folderWithActions|globalDirectory/",
+          "group": "inline@1"
+        },
+        {
+          "command": "notepads.addSubfolder",
+          "when": "viewItem =~ /folderWithActions|globalDirectory/",
+          "group": "inline@2"
+        },
+        {
+          "command": "notepads.removeGlobalDirectory",
+          "when": "viewItem == globalDirectory",
+          "group": "1_modification@2"
+        },
+        {
+          "command": "notepads.renameGlobalDirectory",
+          "when": "viewItem == globalDirectory",
+          "group": "1_modification@3"
+        },
+        {
+          "command": "notepads.editGlobalDirectoryPath",
+          "when": "viewItem == globalDirectory",
+          "group": "1_modification@4"
+        },
+        {
+          "command": "notepads.deleteFolder",
+          "when": "viewItem =~ /folderWithActions|globalDirectory/",
+          "group": "inline@3"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "MarkdownMind",
+      "properties": {
+        "notepads.globalDirectories": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "Display name for the directory"
+              },
+              "path": {
+                "type": "string",
+                "description": "Path to the directory"
+              },
+              "enabled": {
+                "type": "boolean",
+                "description": "Whether this directory is enabled",
+                "default": true
+              }
+            },
+            "required": [
+              "name",
+              "path"
+            ]
+          },
+          "default": [],
+          "description": "List of global note directories"
+        }
+      }
+    }
+  },
+  "activationEvents": [
+    "onView:notepads",
+    "onCommand:notepads.addGlobalDirectory"
+  ],
+  "main": "./src/extension.js",
+  "devDependencies": {
+    "@types/vscode": "^1.75.0"
+  },
+  "files": [
+    "src/**/*",
+    "resources/**/*",
+    "LICENSE.md"
+  ]
+}
